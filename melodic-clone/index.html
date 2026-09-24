@@ -32,7 +32,7 @@ button{font:inherit}
   display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.06)
 }
 .chrome-left,.chrome-right{display:flex;align-items:center;gap:3px}
-.chrome-center{min-width:0;text-align:center;line-height:1.05}
+.chrome-center{min-width:0;text-align:left;line-height:1.05}
 .route{font-size:10px;color:rgba(255,255,255,.62);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .page-title{font-size:12px;font-weight:700;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .iconbtn{width:34px;height:34px;border:0;border-radius:50%;background:transparent;color:#fff;display:grid;place-items:center;position:relative}
@@ -43,6 +43,26 @@ button{font:inherit}
 .avatar{width:32px;height:32px;border:0;border-radius:50%;background:#fff;color:#30343c;font-size:11px;font-weight:800}
 .badge{position:absolute;top:0;right:-1px;min-width:16px;height:16px;padding:0 3px;border-radius:8px;background:var(--red);display:grid;place-items:center;font-size:9px;font-weight:800;border:2px solid var(--dark)}
 .logo{font-size:16px;font-weight:900;letter-spacing:-.5px}
+.grid6{width:30px;height:30px;border:1px solid rgba(255,255,255,.55);border-radius:7px;display:grid;place-items:center;font-size:10px;font-weight:800}
+.dotsbtn{font-size:18px;line-height:1}
+.homeglyph{font-size:17px}
+.deposit-row{padding:12px 16px 0;background:#fff}
+.deposit-wide{width:100%;height:44px;border:0;border-radius:12px;background:var(--red);color:#fff;font-weight:760}
+.explore-chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}.explore-chips::-webkit-scrollbar{display:none}
+.explore-chip{flex:0 0 auto;border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 12px;font-size:11px;font-weight:700;color:#4d525b;white-space:nowrap}
+.feature-card{border:1px solid var(--line);border-radius:15px;padding:15px;background:#fff;position:relative;overflow:hidden;min-height:188px}
+.feature-card h3{margin:0 0 6px;font-size:17px}.feature-card p{margin:0;color:var(--muted);font-size:11px;line-height:1.45;max-width:82%}
+.yearline,.pricegrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:15px}
+.yearline{font-size:9px;color:var(--muted)}.pricegrid{margin-top:4px;font-size:12px;font-weight:760}
+.activate{height:38px;border:0;border-radius:10px;background:var(--red);color:#fff;font-weight:750;padding:0 13px;margin-top:14px}
+.dotrow{display:flex;justify-content:center;gap:5px;margin-top:8px}.dot{width:6px;height:6px;border-radius:50%;background:#d2d4d8}.dot.active{width:16px;border-radius:4px;background:var(--red)}
+.mini-card{flex:0 0 70%;border:1px solid var(--line);border-radius:14px;background:#fff;padding:14px;text-align:left;min-height:116px}
+.mini-card h4{margin:0 0 6px;font-size:14px}.mini-card p{margin:0;font-size:10px;color:var(--muted);line-height:1.4}.mini-sub{margin-top:13px;color:var(--red);font-size:9px;font-weight:750}
+.platform{width:100%;display:flex;align-items:center;gap:11px;border:1px solid var(--line);border-radius:13px;background:#fff;padding:13px;text-align:left;margin-bottom:8px}
+.platform-icon{width:38px;height:38px;border-radius:11px;background:#f2f3f5;color:var(--red);display:grid;place-items:center;font-weight:850}
+.platform h4{margin:0 0 3px;font-size:13px}.platform p{margin:0;font-size:10px;color:var(--muted);line-height:1.35}
+.types{display:flex;flex-wrap:wrap;gap:8px}.type{border:1px solid var(--line);border-radius:999px;background:#fff;padding:8px 10px;font-size:10px}
+.hide-link{border:0;background:transparent;color:#fff;font-size:10px;opacity:.78;padding:5px 0}
 .logo-dot{color:var(--red)}
 .dropdown{
   position:fixed;z-index:60;top:58px;left:50%;transform:translateX(-50%);width:min(398px,calc(100vw - 24px));
@@ -146,47 +166,63 @@ const icons={
 };
 function route(){return 'home.deriv.com/dashboard'+(state.view==='home'?'':'/'+state.view)}
 function title(){return state.view==='home'?'Dashboard':state.view==='cfds'?'CFDs':state.view==='options'?'Options':'Portfolio'}
-function header(optionsOnly){
- const left=(state.view!=='home'?'<button class="iconbtn" data-action="back">'+icons.back+'</button>':'')+
-   (optionsOnly?'<span class="logo">Deriv<span class="logo-dot">.</span></span>':'<button class="iconbtn" data-action="menu">'+icons.menu+'<span class="more-label">More</span></button>');
- const mid='<div class="chrome-center"><div class="route">'+route()+'</div><div class="page-title">'+title()+'</div></div>';
- const right=optionsOnly
-   ? '<div class="chrome-right"><button class="iconbtn" data-soon="search">'+icons.search+'</button><button class="iconbtn" data-soon="notifications">'+icons.bell+'<span class="badge">6</span></button><button class="iconbtn" data-soon="settings">'+icons.gear+'</button></div>'
-   : '<div class="chrome-right"><button class="ask" data-soon="amy"><span class="amy">✦</span><span>Ask Amy</span></button><button class="iconbtn" data-soon="notifications">'+icons.bell+'<span class="badge">5</span></button><button class="iconbtn" data-soon="settings">'+icons.gear+'</button><button class="avatar" data-soon="profile">GW</button></div>';
- return '<header class="chrome"><div class="chrome-left">'+left+'</div>'+mid+right+'</header>'+
+function header(){
+ const home='<span class="homeglyph">⌂</span>';
+ const grid='<span class="grid6">6</span>';
+ const dots='<span class="dotsbtn">•••</span>';
+ const eye='<span style="font-size:17px">◉</span><span class="badge">5</span>';
+ let center='', right='';
+ if(state.view==='portfolio'){
+   center='<div class="chrome-center"><div class="page-title"><span class="logo">Deriv<span class="logo-dot">.</span></span></div></div>';
+   right='<div class="chrome-right"><button class="ask" data-soon="amy"><span class="amy">✦</span><span>Ask Amy</span></button><button class="iconbtn" data-soon="grid">'+grid+'</button><button class="iconbtn" data-action="menu">'+dots+'</button></div>';
+ }else{
+   center='<div class="chrome-center"><div class="route">'+route()+'</div></div>';
+   right='<div class="chrome-right"><button class="iconbtn" data-soon="grid">'+grid+'</button><button class="iconbtn" data-action="menu">'+dots+'</button>'+(state.view!=='options'?'<button class="iconbtn" data-soon="notifications">'+eye+'</button>':'')+(state.view==='home'?'<button class="avatar" data-soon="profile">GW</button>':'')+'</div>';
+ }
+ return '<header class="chrome"><div class="chrome-left">'+home+'</div>'+center+right+'</header>'+
    (state.menu?'<div class="dropdown">'+['CFDs','Standard','Options','MTS SWF','TradingView'].map(x=>'<button class="dropitem" data-menuitem="'+x+'">'+x+'</button>').join('')+'</div>':'');
 }
-function balance(label,loading){
- return '<section class="balance"><div class="balance-top"><div><div class="balance-label">'+label+'</div>'+(loading?'<div class="shimmer"></div>':'<div class="amount">0.00 USD</div>')+'</div>'+(loading?'<button class="refresh" data-action="refresh">↻ Refresh balance</button>':'')+'</div><div class="updated">Updated just now</div></section>';
+function balance(label,showRefresh,showHide){
+ return '<section class="balance"><div class="balance-top"><div><div class="balance-label">'+label+'</div><div class="amount">0.00 USD</div></div>'+
+   (showHide?'<button class="hide-link" data-soon="hide">Hide balances</button>':showRefresh?'<button class="refresh" data-action="refresh">↻ Refresh balance</button>':'')+
+   '</div><div class="updated">Updated just now</div></section>';
 }
 function accountCard(icon,cls,name,meta,more){
  return '<button class="account-card" data-soon="'+name+'">'+(more?'<span class="ellipsis">•••</span>':'')+'<span class="acc-icon '+cls+'">'+icon+'</span><div class="acc-label">'+name+'</div><div class="acc-value">0.00 USD</div>'+(meta?'<div class="acc-meta">'+meta+'</div>':'')+'</button>';
 }
+function highlight(t,d,tags){
+ return '<button class="explore-card" data-soon="'+t+'"><h4>'+t+'</h4><p>'+d+'</p><div class="market-mark">'+tags.map(x=>'<span class="pill">'+x+'</span>').join('')+'</div></button>';
+}
+function mini(t,d,sub){return '<button class="mini-card" data-soon="'+t+'"><h4>'+t+'</h4><p>'+d+'</p><div class="mini-sub">'+sub+'</div></button>'}
+function platform(i,t,d){return '<button class="platform" data-soon="'+t+'"><span class="platform-icon">'+i+'</span><span><h4>'+t+'</h4><p>'+d+'</p></span></button>'}
+function featureGold(){
+ return '<div class="feature-card"><h3>Gold</h3><p>Trade gold and other precious metals with tight spreads, directly on MT5.</p><div class="yearline"><span>2023</span><span>2024</span><span>2025</span></div><div class="pricegrid"><span>$2062.96</span><span>$2623.84</span><span>$4315.13</span></div><div class="market-mark"><span class="pill">24/5 trading</span><span class="pill">Specialised account</span></div><button class="activate" data-soon="activate-gold">Activate now</button></div><div class="dotrow"><span class="dot active"></span><span class="dot"></span></div>';
+}
 function home(){
- return header(false)+balance('Total value',false)+'<div class="page">'+
- '<section class="section"><div class="section-head"><div class="section-title">Trading Accounts</div></div><div class="cards2">'+
- accountCard('MT','acc-blue','CFDs | Standard','',true)+accountCard('O','acc-red','Options','',false)+'</div></section>'+
- (state.banner?'<section class="section"><div class="banner"><button class="dismiss" data-action="dismiss">Dismiss</button><h3>Trade with TradingView</h3><p>AI-powered market analysis for smarter trading</p><div class="banner-art"></div></div></section>':'')+
- '<section class="section"><div class="section-head"><div class="section-title">Explore Deriv</div></div><div class="hscroll">'+
- explore('Metals','Key metals. Tight spreads. Up to 1:1000 leverage.',['Gold','Silver','Copper'])+
- explore('US Indices','S&P 500, US Tech 100 and more.',['US 500','US Tech 100'])+
- explore('Major FX','Trade 50+ currency pairs around the clock.',['EUR/USD','GBP/USD'])+
+ return header()+balance('Total value',true,false)+'<div class="deposit-row"><button class="deposit-wide" data-soon="deposit">Deposit</button></div><div class="page">'+
+ '<section class="section"><div class="section-head"><div class="section-title">My trading accounts</div></div><div class="cards2">'+
+ accountCard('MT5 STD','acc-blue','CFDs | Standard','',true)+accountCard('↔','acc-red','Options','',false)+'</div></section>'+
+ (state.banner?'<section class="section"><div class="banner"><button class="dismiss" data-action="dismiss">Dismiss</button><h3>Trade with TradingView</h3><p>Advanced charts and tools for 24/7 Derived Indices.</p><div class="banner-art"></div></div><div class="dotrow"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div></section>':'')+
+ '<section class="section"><div class="section-head"><div class="section-title">Explore Deriv</div></div><div class="explore-chips">'+
+ ['CFDs | Standard','Options','TradingView','Swap-Free','P2P','More'].map(x=>'<button class="explore-chip" data-soon="'+x+'">'+x+'</button>').join('')+
+ '</div></section>'+
+ '<section class="section"><div class="section-head"><div class="section-title">Highlights</div><div style="font-size:13px;color:#7d8189">‹ &nbsp; ›</div></div><div class="hscroll">'+
+ highlight('Metals','A quick way to trade the world\'s leading gold and silver spot contracts.',['Gold','Silver'])+
+ highlight('US Indices','Trade the biggest US stock market indices with competitive spreads.',['S&P 500','Nasdaq 100','Dow Jones Industrial Average'])+
+ highlight('Major FX','Trade major currency pairs with tight spreads and high leverage.',['EUR/USD','GBP/USD','USD/JPY'])+
  '</div></section></div>';
 }
 function explore(t,d,pills){return '<button class="explore-card" data-soon="'+t+'"><h4>'+t+'</h4><p>'+d+'</p><div class="market-mark">'+pills.map(x=>'<span class="pill">'+x+'</span>').join('')+'</div></button>'}
 function cfds(){
- return header(false)+balance('Total value',false)+'<div class="tabs"><button class="tab active">CFDs</button><button class="tab" data-view="options">Options</button></div><div class="page">'+
- '<section class="section"><div class="section-head"><div class="section-title">Accounts</div></div><div class="cards2">'+
- accountCard('S','acc-blue','Standard','<span>Swap-Free</span><span>MTS SWF</span>',false)+
- accountCard('D','acc-dark','Demo','<span>Swap-Free</span><span>MTS SWF</span>',false)+
- '</div></section>'+
- '<section class="section">'+fullCard('P2P','Peer-to-peer trading','Buy and sell directly with other users')+'</section>'+
- '<section class="section"><div class="banner"><button class="dismiss" data-soon="dismiss-tv">Dismiss</button><h3>Trade with TradingView</h3><p>AI-powered market analysis for smarter trading</p><div class="banner-art"></div></div></section>'+
- '<section class="section"><div class="section-head"><div class="section-title">Highlights</div><div style="font-size:13px;color:#7d8189">‹ &nbsp; ›</div></div><div class="hscroll">'+
- highlight('Metals','Key metals. Tight spreads.','MT5','')+
- highlight('US Tech 100','Tech-heavy US index.','MT5','')+
- highlight('US 500','Broad US market exposure.','MT5','')+
- highlight('EUR/USD','Major FX pair.','','+0.42%')+
+ return header()+balance('Total trading value',true,false)+'<div class="page">'+segment()+circleActions(['Trade','Deposit'])+
+ '<section class="section"><div class="section-head"><div class="section-title">My accounts</div></div>'+
+ '<button class="account-card" style="width:100%" data-soon="CFDs | Standard"><span class="acc-icon acc-blue">MT5 STD</span><div class="acc-label">CFDs | Standard</div><div class="acc-value">0.00 USD</div></button></section>'+
+ '<section class="section"><div class="section-head"><div class="section-title">Featured</div></div>'+featureGold()+'</section>'+
+ '<section class="section"><div class="section-head"><div class="section-title">Activate more accounts</div><button class="small-link" data-soon="compare">Compare</button></div><div class="hscroll">'+
+ mini('cTrader','CFDs copy trading with 100+ instruments.','Copy trading')+
+ mini('Zero Spread','Cost-efficient trades, starting from 0 pips.','Trade with your terms')+
+ mini('Swap-Free','Keep trades open with no overnight charges.','Trade with your terms')+
+ mini('Financial','Tight spreads for financial markets.','Financial markets')+
  '</div></section></div>';
 }
 function fullCard(icon,t,d){return '<button class="full-card" data-soon="'+t+'"><span class="full-icon">'+icon+'</span><span><h4>'+t+'</h4><p>'+d+'</p></span></button>'}
@@ -194,32 +230,28 @@ function highlight(t,d,badge,gain){return '<button class="highlight" data-soon="
 function segment(){return '<div class="segment"><button class="'+(state.mode==='real'?'active':'')+'" data-mode="real">Real</button><button class="'+(state.mode==='demo'?'active':'')+'" data-mode="demo">Demo</button></div>'}
 function circleActions(items){return '<div class="circle-actions">'+items.map((x,i)=>'<button class="circle-action" data-soon="'+x+'"><span class="circle '+(i===0?'primary':'')+'">'+(x==='Trade'?'↗':x==='Deposit'?'+':x==='Withdraw'?'−':'⇄')+'</span><span>'+x+'</span></button>').join('')+'</div>'}
 function options(){
- return header(true)+balance('Total trading value',false)+'<div class="page">'+segment()+circleActions(['Trade','Transfer'])+
- '<section class="section"><div class="section-head"><div class="section-title">Most Traded Markets</div></div><div class="quotes">'+
- quote('Volatility 100 (1s) Index','823.21','-0.19% (5m)')+
- quote('Volatility 10 (1s) Index','9,737.69','-0.13% (5m)')+
+ return header()+balance('Total trading value',false,true)+'<div class="page">'+segment()+circleActions(['Trade','Transfer'])+
+ '<section class="section"><div class="section-head"><div class="section-title">Most traded markets</div></div><div class="quotes">'+
+ quote('Volatility 100 (1s) Index','828.71','-0.05% (5m)')+
+ quote('Volatility 10 (1s) Index','9,737.86','-0.24% (5m)')+
+ quote('Volatility 15 (1s) Index','15,209.11','-0.39% (5m)')+
+ quote('Volatility 25 (1s) Index','7,918.09','-0.59% (5m)')+
+ quote('Volatility 30 (1s) Index','343.18','+0.03% (5m)')+
+ '</div></section>'+
+ '<section class="section"><div class="section-head"><div class="section-title">Featured</div></div><div class="banner"><h3>Rise / Fall</h3><p>Predict whether the market price will rise or fall by the end of your contract.</p><div class="market-mark"><span class="pill">100+ markets</span><span class="pill">From 1 USD</span></div></div></section>'+
+ '<section class="section"><div class="section-head"><div class="section-title">Platforms</div></div>'+
+ platform('DT','Deriv Trader','Trade options on 100+ markets. No overnight swap fees.')+
+ platform('DB','Deriv Bot','Build and run automated bots, no coding needed.')+
+ platform('ST','SmartTrader','Classic interface for advanced options traders.')+
+ '</section>'+
+ '<section class="section"><div class="section-head"><div class="section-title">Trade types</div></div><div class="types">'+
+ ['Rise/Fall','Higher/Lower','Matches/Differs','Even/Odd','Accumulators','Over/Under','Multipliers','Touch/No Touch','Vanillas','Turbos'].map(x=>'<button class="type" data-soon="'+x+'">'+x+'</button>').join('')+
  '</div></section></div>';
 }
-function quote(n,p,c){return '<button class="quote" data-soon="'+n+'"><div class="quote-name">'+n+'</div><div class="quote-price">'+p+' <span class="trend">↘</span></div><div class="change">'+c+'</div></button>'}
+function quote(n,p,c){const up=c.trim().startsWith('+');return '<button class="quote" data-soon="'+n+'"><div class="quote-name">'+n+'</div><div class="quote-price">'+p+' <span class="trend" style="color:'+(up?'#15915f':'#d64e56')+'">'+(up?'↗':'↘')+'</span></div><div class="change" style="color:'+(up?'#15915f':'#d64e56')+'">'+c+'</div></button>'}
 function portfolioTabs(){return '<div class="subtabs">'+['overview','wallet','partners','trading','p2p'].map(x=>'<button class="subtab '+(state.portfolio===x?'active':'')+'" data-portfolio="'+x+'">'+x.charAt(0).toUpperCase()+x.slice(1)+'</button>').join('')+'</div>'}
-function walletRows(){return '<div class="list"><div class="row"><div><div class="row-title">US Dollar</div></div><div class="row-value">0.00 USD</div></div><div class="row"><div><div class="row-title">USDT (Tron)</div><div class="row-sub">Tether TRC20</div></div><div class="row-value">0.00 USDT<div class="row-eq">0.00 USD</div></div></div></div>'}
-function tradingRows(){return '<div class="list"><div class="row"><div class="row-title">Options</div><div class="row-value">0.00 USD</div></div><div class="row"><div class="row-title">Standard</div><div class="row-value">0.00 USD</div></div></div>'}
-function portfolio(){
- let content='';
- if(state.portfolio==='overview'){
-   content='<section class="section"><div class="section-title">Wallet</div><div style="height:8px"></div>'+walletRows()+'</section>'+
-   '<section class="section"><div class="section-title">Partners</div><div style="height:8px"></div>'+walletRows()+'</section>'+
-   '<section class="section"><div class="section-title">Trading</div><div style="height:8px"></div>'+tradingRows()+'</section>';
- }else if(state.portfolio==='wallet'||state.portfolio==='partners'){
-   content='<section class="section"><div class="section-title">'+cap(state.portfolio)+'</div><div style="height:8px"></div>'+walletRows()+'</section>';
- }else if(state.portfolio==='trading'){
-   content='<section class="section"><div class="section-title">Trading</div><div style="height:8px"></div>'+tradingRows()+'</section>';
- }else{
-   content='<section class="section"><div class="empty">P2P</div></section>';
- }
- return header(false)+portfolioTabs()+balance('Est. total value',true)+'<div class="page">'+circleActions(['Deposit','Transfer','Withdraw'])+content+
- '<section class="section"><button class="small-link" data-soon="transactions">View all transactions</button></section></div>';
-}
+function walletRows(){return '<div class="list"><div class="row"><div><div class="row-title">US Dollar</div></div><div class="row-value">0.00 USD</div></div><div class="row"><div><div class="row-title">USDT (Tron)</div></div><div class="row-value">0.00 USDT<div class="row-eq">0.00 USD</div></div></div></div>'}
+function partnersRows(){return '<div class="list"><div class="row"><div class="row-title">US Dollar</div><div class="row-value">0.00 USD</div></div></div>'}
 function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
 function modal(){return '<div class="modalback" id="modalback"><div class="modal"><div class="fish">🐟</div><h3>Coming soon</h3><p>This part of the app isn\'t wired up in the clone yet.</p><button class="close" data-action="close">Close</button></div></div>'}
 function render(){
