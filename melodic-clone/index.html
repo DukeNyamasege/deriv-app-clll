@@ -252,6 +252,25 @@ function quote(n,p,c){const up=c.trim().startsWith('+');return '<button class="q
 function portfolioTabs(){return '<div class="subtabs">'+['overview','wallet','partners','trading','p2p'].map(x=>'<button class="subtab '+(state.portfolio===x?'active':'')+'" data-portfolio="'+x+'">'+x.charAt(0).toUpperCase()+x.slice(1)+'</button>').join('')+'</div>'}
 function walletRows(){return '<div class="list"><div class="row"><div><div class="row-title">US Dollar</div></div><div class="row-value">0.00 USD</div></div><div class="row"><div><div class="row-title">USDT (Tron)</div></div><div class="row-value">0.00 USDT<div class="row-eq">0.00 USD</div></div></div></div>'}
 function partnersRows(){return '<div class="list"><div class="row"><div class="row-title">US Dollar</div><div class="row-value">0.00 USD</div></div></div>'}
+function tradingRows(){return '<div class="list"><div class="row"><div class="row-title">Options</div><div class="row-value">0.00 USD</div></div><div class="row"><div class="row-title">Standard</div><div class="row-value">0.00 USD</div></div></div>'}
+function portfolio(){
+ let content='';
+ if(state.portfolio==='overview'){
+   content='<section class="section"><div class="section-title">Wallet</div><div style="height:8px"></div>'+walletRows()+'</section>'+
+   '<section class="section"><div class="section-title">Partners</div><div style="height:8px"></div>'+partnersRows()+'</section>'+
+   '<section class="section"><div class="section-title">Trading</div><div style="height:8px"></div>'+tradingRows()+'</section>';
+ }else if(state.portfolio==='wallet'){
+   content='<section class="section"><div class="section-title">Wallet</div><div style="height:8px"></div>'+walletRows()+'</section>';
+ }else if(state.portfolio==='partners'){
+   content='<section class="section"><div class="section-title">Partners</div><div style="height:8px"></div>'+partnersRows()+'</section>';
+ }else if(state.portfolio==='trading'){
+   content='<section class="section"><div class="section-title">Trading</div><div style="height:8px"></div>'+tradingRows()+'</section>';
+ }else{
+   content='<section class="section"><div class="empty">P2P</div></section>';
+ }
+ return header()+portfolioTabs()+balance('Est. total value',true,false)+'<div class="page">'+circleActions(['Deposit','Transfer','Withdraw'])+content+
+ '<section class="section"><button class="small-link" data-soon="transactions">View all transactions</button></section></div>';
+}
 function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
 function modal(){return '<div class="modalback" id="modalback"><div class="modal"><div class="fish">🐟</div><h3>Coming soon</h3><p>This part of the app isn\'t wired up in the clone yet.</p><button class="close" data-action="close">Close</button></div></div>'}
 function render(){
