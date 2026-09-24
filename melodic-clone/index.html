@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#171619">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Chrome">
+  <title>Deriv - Online Trading Platform</title>
+  <style>
+    :root{
+      --ink:#0b0b0b;
+      --muted:#6f747b;
+      --soft:#f5f6f7;
+      --line:#e9ebee;
+      --dark:#142b34;
+      --dark2:#0e1e25;
+      --accent:#ff6700;
+      --danger:#e5484d;
+      --success:#128a57;
+      --card:#fff;
+      --radius:14px;
+      --shadow:0 2px 8px rgba(12,27,34,.08);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;background:#e9ecef;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;color:var(--ink)}
+    body{min-height:100vh}
+    button{font:inherit;color:inherit}
+    .shell{width:100%;max-width:430px;margin:0 auto;min-height:100vh;background:#fff;position:relative;overflow:hidden;box-shadow:0 0 24px rgba(0,0,0,.08)}
+    .app{min-height:100vh;padding-bottom:68px;background:#fff}
+    .top{
+      position:sticky;top:0;z-index:20;background:var(--dark);color:#fff;
+      min-height:56px;display:flex;align-items:center;justify-content:space-between;padding:9px 16px;
+      border-bottom:1px solid rgba(255,255,255,.06)
+    }
+    .top-left,.top-right{display:flex;align-items:center;gap:10px}
+    .avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#fff;color:#20252a;font-weight:700;font-size:13px;border:0}
+    .iconbtn{position:relative;width:36px;height:36px;border:0;background:transparent;color:#fff;border-radius:50%;display:grid;place-items:center}
+    .iconbtn:hover{background:rgba(255,255,255,.08)}
+    .ask{border:0;background:transparent;color:#fff;display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600}
+    .amy{
+      width:28px;height:28px;border-radius:10px;display:grid;place-items:center;color:#fff;font-size:15px;
+      background:conic-gradient(from 35deg,#ff4a6e,#ff9b42,#f7dc4f,#55d890,#4ec5ff,#806cff,#ff4a6e)
+    }
+    .eye-label{display:none}
+    .badge{position:absolute;right:0;top:0;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:#e74449;color:#fff;font-size:10px;font-weight:700;display:grid;place-items:center;border:2px solid var(--dark)}
+    .balance{
+      background:linear-gradient(180deg,var(--dark) 0%,var(--dark2) 100%);color:#fff;padding:16px 18px 18px;
+    }
+    .balance-row{display:flex;align-items:center;justify-content:space-between}
+    .balance-label{font-size:12px;color:rgba(255,255,255,.72);font-weight:500}
+    .amount{font-size:30px;line-height:1.1;font-weight:720;letter-spacing:-.7px;margin-top:6px}
+    .updated{font-size:11px;color:rgba(255,255,255,.56);margin-top:7px}
+    .refresh{border:0;background:transparent;color:rgba(255,255,255,.76);font-size:11px;padding:5px 0}
+    .shimmer{background:linear-gradient(90deg,#fff 0%,#c7d0d4 40%,#fff 60%,#fff 100%);background-size:220% 100%;-webkit-background-clip:text;color:transparent;animation:shine 1.2s linear infinite}
+    @keyframes shine{to{background-position:-220% 0}}
+    .page{padding:14px 16px 24px}
+    .actions{display:flex;gap:10px;margin:0 0 18px}
+    .action{flex:1;min-height:46px;border-radius:12px;border:1px solid var(--line);background:#fff;font-weight:650;font-size:13px;display:flex;align-items:center;justify-content:center;gap:7px}
+    .action.primary{border-color:var(--accent);background:var(--accent);color:#fff}
+    .section{margin-top:18px}
+    .section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+    .section-title{font-size:17px;font-weight:720;letter-spacing:-.2px}
+    .link{border:0;background:transparent;color:var(--accent);font-size:12px;font-weight:650;padding:0}
+    .cards2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .account{min-height:104px;padding:14px;border:1px solid var(--line);background:#fff;text-align:left}
+    .acc-icon{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-weight:800;color:#fff;margin-bottom:12px}
+    .acc-blue{background:#2c80ff}.acc-red{background:#ec4b58}
+    .acc-name{font-size:13px;font-weight:650;color:#23272b}.acc-bal{font-size:18px;font-weight:730;margin-top:4px}
+    .noscroll{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 1px 8px;scrollbar-width:none}
+    .noscroll::-webkit-scrollbar{display:none}
+    .chip{flex:0 0 auto;border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 13px;font-size:12px;font-weight:620;white-space:nowrap}
+    .chip.active{border-color:#ffc8a3;color:var(--accent);background:#fff8f3}
+    .hero{
+      border-radius:16px;padding:16px;min-height:128px;position:relative;overflow:hidden;border:1px solid #2c4854;
+      background:linear-gradient(135deg,#173743,#10242d);color:#fff
+    }
+    .hero h3{margin:0 0 7px;font-size:17px}.hero p{margin:0;max-width:80%;font-size:12px;line-height:1.45;color:rgba(255,255,255,.73)}
+    .hero .dismiss{position:absolute;right:10px;top:10px;border:0;background:rgba(255,255,255,.09);color:#fff;border-radius:8px;font-size:11px;padding:6px 8px}
+    .hero-mark{position:absolute;right:-12px;bottom:-20px;width:110px;height:110px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ffbd6b,#ff6a00 45%,#5232b9 72%,transparent 73%);filter:blur(.2px);opacity:.88}
+    .dots{display:flex;justify-content:center;gap:5px;margin-top:8px}.dot{width:6px;height:6px;border-radius:50%;background:#d5d8dc}.dot.active{width:16px;border-radius:5px;background:var(--accent)}
+    .market-card{flex:0 0 84%;scroll-snap-align:start;padding:15px;min-height:150px;background:#fff;border:1px solid var(--line);border-radius:15px;box-shadow:var(--shadow)}
+    .market-title{font-size:16px;font-weight:720}.market-desc{font-size:12px;color:var(--muted);line-height:1.45;margin:6px 0 13px}.tags{display:flex;flex-wrap:wrap;gap:6px}
+    .tag{font-size:10px;border-radius:999px;background:#f0f2f3;padding:5px 8px;color:#444b51}
+    .tabs{display:flex;background:#fff;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none;padding:0 10px}
+    .tabs::-webkit-scrollbar{display:none}
+    .tab{position:relative;flex:0 0 auto;border:0;background:transparent;padding:13px 12px;font-size:12px;font-weight:650;color:#767b82}
+    .tab.active{color:#111}.tab.active:after{content:"";position:absolute;left:12px;right:12px;bottom:0;height:3px;border-radius:3px;background:var(--accent)}
+    .feature{
+      padding:16px;border-radius:16px;background:linear-gradient(140deg,#f4f8fb,#fff);border:1px solid #e4e9ed;min-height:184px;position:relative;overflow:hidden
+    }
+    .feature h3{margin:0;font-size:18px}.feature p{font-size:12px;color:#5f666c;max-width:73%;line-height:1.45}
+    .feature .yearline{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:16px;font-size:10px;color:#70777d}
+    .feature .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:5px;font-size:13px;font-weight:730}
+    .feature:after{content:"";position:absolute;width:140px;height:90px;right:-30px;bottom:-12px;background:linear-gradient(155deg,transparent 45%,#f1b414 46% 48%,transparent 49% 55%,#d79400 56% 58%,transparent 59%);transform:rotate(-4deg)}
+    .hscroll-card{flex:0 0 72%;padding:14px;min-height:120px;border:1px solid var(--line);border-radius:14px;background:#fff}
+    .hscroll-card h4{margin:0 0 6px;font-size:15px}.hscroll-card p{margin:0;color:var(--muted);font-size:12px;line-height:1.45}
+    .mini-label{margin-top:13px;font-size:10px;color:var(--accent);font-weight:700}
+    .switcher{display:flex;gap:4px;background:#f0f1f2;border-radius:999px;padding:3px;width:max-content;margin-bottom:12px}
+    .switcher button{border:0;border-radius:999px;padding:7px 13px;background:transparent;font-size:12px;font-weight:650;color:#70767b}
+    .switcher button.active{background:#fff;color:#111;box-shadow:0 1px 5px rgba(0,0,0,.09)}
+    .quotes{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:6px}
+    .quotes::-webkit-scrollbar{display:none}
+    .quote{flex:0 0 74%;scroll-snap-align:start;border:1px solid var(--line);border-radius:14px;padding:14px;background:#fff}
+    .quote-name{font-size:13px;font-weight:660;color:#363b40;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .quote-price{font-size:22px;font-weight:750;margin:8px 0 3px}.chg{font-size:11px}.down{color:#d94b54}.up{color:#128a57}
+    .platform{display:flex;align-items:center;gap:11px;padding:13px;border:1px solid var(--line);border-radius:13px;background:#fff;margin-bottom:8px}
+    .platform-icon{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:#f2f4f5;font-weight:800;color:#ff4858}
+    .platform h4{font-size:14px;margin:0 0 3px}.platform p{font-size:11px;color:var(--muted);margin:0;line-height:1.35}
+    .typegrid{display:flex;flex-wrap:wrap;gap:8px}.type{border:1px solid var(--line);border-radius:999px;padding:8px 10px;font-size:11px;background:#fff}
+    .subtabs{display:flex;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--line);background:#fff;padding:0 8px}.subtabs::-webkit-scrollbar{display:none}
+    .subtab{border:0;background:transparent;padding:13px 10px;font-size:12px;color:#747a80;white-space:nowrap}.subtab.active{color:var(--accent);font-weight:700;border-bottom:3px solid var(--accent)}
+    .list{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}
+    .row{display:flex;align-items:center;justify-content:space-between;padding:13px 14px;border-bottom:1px solid var(--line)}.row:last-child{border-bottom:0}
+    .row-title{font-size:13px;font-weight:650}.row-sub{font-size:10px;color:var(--muted);margin-top:3px}.row-val{text-align:right;font-size:13px;font-weight:670}.row-eq{font-size:10px;color:var(--muted);margin-top:3px}
+    .bottom{
+      position:fixed;left:50%;transform:translateX(-50%);bottom:0;z-index:30;width:100%;max-width:430px;height:64px;background:#fff;border-top:1px solid var(--line);
+      display:grid;grid-template-columns:repeat(4,1fr);padding-bottom:max(3px,env(safe-area-inset-bottom))
+    }
+    .nav{border:0;background:#fff;color:#858a90;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:10px}
+    .nav svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8}.nav.active{color:var(--accent);font-weight:700}
+    .modalback{position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:80;display:flex;align-items:flex-end;justify-content:center}
+    .modal{width:100%;max-width:430px;background:#fff;border-radius:20px 20px 0 0;padding:24px 20px 30px;text-align:center}
+    .fish{font-size:42px;margin-bottom:7px}.modal h3{margin:0 0 7px;font-size:19px}.modal p{margin:0 auto 18px;max-width:300px;font-size:13px;line-height:1.45;color:var(--muted)}
+    .close{width:100%;height:44px;border:0;border-radius:12px;background:#111;color:#fff;font-weight:700}
+    .netlify-badge{position:fixed;right:8px;bottom:72px;z-index:40;text-decoration:none;background:#111;color:#fff;border-radius:5px;padding:6px 8px;font-size:9px;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+    .mutedspace{height:4px}
+    @media(min-width:700px){
+      .shell{margin-top:12px;margin-bottom:12px;min-height:calc(100vh - 24px);border-radius:20px}
+      .bottom{bottom:12px;border-radius:0 0 20px 20px}
+      .netlify-badge{right:calc(50% - 210px);transform:translateX(100%)}
+    }
+  </style>
+</head>
+<body>
+<div class="shell">
+  <main id="app" class="app" aria-live="polite"></main>
+  <nav class="bottom" aria-label="Primary navigation">
+    <button class="nav active" data-view="home"><svg viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/><path d="M9.5 20v-6h5v6"/></svg><span>Home</span></button>
+    <button class="nav" data-view="cfds"><svg viewBox="0 0 24 24"><path d="M4 18V8"/><path d="M10 18V5"/><path d="M16 18v-7"/><path d="M22 18H2"/></svg><span>CFDs</span></button>
+    <button class="nav" data-view="options"><svg viewBox="0 0 24 24"><path d="M4 18 9 13l4 3 7-9"/><path d="M17 7h3v3"/></svg><span>Options</span></button>
+    <button class="nav" data-view="portfolio"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5.5A1.5 1.5 0 0 1 9.5 4h5A1.5 1.5 0 0 1 16 5.5V7"/><path d="M3 12h18"/></svg><span>Portfolio</span></button>
+  </nav>
+  <a class="netlify-badge" href="https://app.netlify.com/drop" target="_blank" rel="noreferrer">Powered by Netlify</a>
+</div>
+<script>
+(function(){
+  var state={view:'home',hide:false,mode:'real',portfolio:'overview',banner:true};
+  var app=document.getElementById('app');
+
+  function icon(name){
+    var m={
+      bell:'<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg>',
+      eye:'<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.5"/></svg>',
+      refresh:'<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6v5h-5"/><path d="M4 18v-5h5"/><path d="M6.1 8.5A7 7 0 0 1 18.5 7L20 11"/><path d="M17.9 15.5A7 7 0 0 1 5.5 17L4 13"/></svg>'
+    }; return m[name]||'';
+  }
+  function money(v){return state.hide?'•••• USD':v+' USD'}
+  function header(){
+    return '<header class="top">'+
+      '<div class="top-left"><button class="avatar" data-soon="profile">GW</button><button class="ask" data-soon="amy"><span class="amy">✦</span><span>Ask Amy</span></button></div>'+
+      '<div class="top-right"><button class="iconbtn" data-action="hide" aria-label="Hide balances">'+icon('eye')+'</button><button class="iconbtn" data-soon="notifications" aria-label="Notifications">'+icon('bell')+'<span class="badge">5</span></button></div>'+
+      '</header>';
+  }
+  function balance(label,shimmer){
+    return '<section class="balance"><div class="balance-row"><div><div class="balance-label">'+label+'</div><div class="amount '+(shimmer?'shimmer':'')+'">'+money('0.00')+'</div></div><button class="refresh" data-action="refresh">'+icon('refresh')+' Refresh balance</button></div><div class="updated">Updated just now</div></section>';
+  }
+  function actions(items){
+    return '<div class="actions">'+items.map(function(x,i){return '<button class="action '+(i===0?'primary':'')+'" data-soon="'+x.toLowerCase()+'">'+x+'</button>'}).join('')+'</div>';
+  }
+  function home(){
+    var banner=state.banner?'<section data-testid="home-banner-nudge"><div class="hero"><button class="dismiss" data-action="dismiss">Dismiss</button><h3>AI market analysis</h3><p>Get AI-powered insights on Gold, BTC, Silver, ETH, and more.</p><div class="hero-mark"></div></div><div class="dots" data-testid="home-banner-nudge-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div></section>':'';
+    return header()+balance('Total value',false)+'<div class="page">'+
+      actions(['Deposit'])+
+      '<section class="section"><div class="section-head"><div class="section-title">My trading accounts</div></div><div class="cards2">'+
+      '<button class="account card" data-testid="dashboard-card-account-MTR92013856" data-soon="standard"><span class="acc-icon acc-blue">MT</span><div class="acc-name" data-testid="dashboard-text-account-name-MTR92013856">CFDs | Standard</div><div class="acc-bal" data-testid="dashboard-text-balance-MTR92013856">'+money('0.00')+'</div></button>'+
+      '<button class="account card" data-testid="dashboard-card-account-ROT92013857" data-soon="options"><span class="acc-icon acc-red">O</span><div class="acc-name" data-testid="dashboard-text-account-name-ROT92013857">Options</div><div class="acc-bal" data-testid="dashboard-text-balance-ROT92013857">'+money('0.00')+'</div></button>'+
+      '</div></section>'+banner+
+      '<section class="section"><div class="section-head"><div class="section-title">Explore Deriv</div></div><div class="noscroll">'+
+      ['CFDs | Standard','Options','TradingView','Swap-Free','P2P','More'].map(function(x,i){return '<button class="chip '+(i===0?'active':'')+'" data-soon="'+x+'">'+x+'</button>'}).join('')+
+      '</div></section>'+
+      '<section class="section"><div class="section-head"><div class="section-title">Highlights</div><div>‹ &nbsp; ›</div></div><div class="noscroll">'+
+      market('Metals','Key metals. Tight spreads. Up to 1:1000 leverage.',['MT5','Gold','Silver','Copper'])+
+      market('US Indices','S&P 500, US Tech 100 and more.',['MT5','US 500','US Tech 100'])+
+      market('Major FX','Trade 50+ currency pairs around the clock.',['MT5','EUR/USD','GBP/USD'])+
+      '</div></section></div>';
+  }
+  function market(t,d,tags){
+    return '<button class="market-card" data-soon="'+t+'"><div class="market-title">'+t+'</div><div class="market-desc">'+d+'</div><div class="tags">'+tags.map(function(x){return '<span class="tag">'+x+'</span>'}).join('')+'</div></button>';
+  }
+  function modeSwitch(){
+    return '<div class="switcher"><button class="'+(state.mode==='real'?'active':'')+'" data-mode="real" data-testid="options-tab-mobile-real">Real</button><button class="'+(state.mode==='demo'?'active':'')+'" data-mode="demo" data-testid="options-tab-mobile-demo">Demo</button></div>';
+  }
+  function cfds(){
+    return header()+'<div class="tabs"><button class="tab active">CFDs</button><button class="tab" data-view="options">Options</button></div>'+balance('Total trading value',false)+'<div class="page">'+modeSwitch()+actions(['Trade','Deposit'])+
+    '<section class="section"><div class="section-title">My accounts</div><div class="mutedspace"></div><button class="account card" style="width:100%" data-soon="standard"><span class="acc-icon acc-blue">MT</span><div class="acc-name">CFDs | Standard</div><div class="acc-bal">'+money('0.00')+'</div></button></section>'+
+    '<section class="section"><div class="section-head"><div class="section-title">Featured</div></div><div class="feature"><h3>Gold</h3><p>Trade gold and other precious metals with tight spreads, directly on MT5.</p><div class="yearline"><span>2023</span><span>2024</span><span>2025</span></div><div class="price-grid"><span>$2062.96</span><span>$2623.84</span><span>$4315.13</span></div><div class="tags" style="margin-top:14px"><span class="tag">24/5 trading</span><span class="tag">Specialised account</span><span class="tag">Advanced charts</span><span class="tag">MT5 integration</span></div></div><div class="dots"><span class="dot active"></span><span class="dot"></span></div></section>'+
+    '<section class="section"><div class="section-head"><div class="section-title">Activate more accounts</div><button class="link" data-soon="compare">Compare</button></div><div class="noscroll">'+
+    smallCard('cTrader','CFDs copy trading with 100+ instruments.','Copy trading')+
+    smallCard('Zero Spread','Cost-efficient trades, starting from 0 pips.','Trade with your terms')+
+    smallCard('Swap-Free','Keep trades open with no overnight charges.','Trade with your terms')+
+    smallCard('Financial','Tight spreads for financial markets.','Financial markets')+
+    '</div></section></div>';
+  }
+  function smallCard(t,d,l){return '<button class="hscroll-card" data-soon="'+t+'"><h4>'+t+'</h4><p>'+d+'</p><div class="mini-label">'+l+'</div></button>'}
+  function options(){
+    var quotes=[
+      ['Volatility 100 (1s) Index','827.72','−0.01%','down'],
+      ['Volatility 10 (1s) Index','9,778.50','−0.08%','down'],
+      ['Volatility 15 (1s) Index','15,112.25','−0.47%','down'],
+      ['Volatility 25 (1s) Index','7,947.69','+0.05%','up'],
+      ['Volatility 30 (1s) Index','342.15','−0.68%','down']
+    ];
+    return header()+balance('Total trading value',false)+'<div class="page">'+modeSwitch()+actions(['Trade','Transfer'])+
+      '<section class="section"><div class="section-head"><div class="section-title">Most traded markets</div><button class="link" data-soon="markets">View all</button></div><div class="quotes">'+
+      quotes.map(function(q){return '<button class="quote" data-soon="'+q[0]+'"><div class="quote-name">'+q[0]+'</div><div class="quote-price">'+q[1]+'</div><div class="chg '+q[3]+'">'+q[2]+' <span style="color:#858a90">(5m)</span></div></button>'}).join('')+
+      '</div></section>'+
+      '<section class="section"><div class="section-title">Featured</div><div class="mutedspace"></div><div class="hero" style="background:linear-gradient(135deg,#192d37,#101d24)"><h3>Rise / Fall</h3><p>Predict whether the market price will rise or fall by the end of your contract.</p><div class="tags" style="margin-top:14px"><span class="tag">100+ markets</span><span class="tag">From 1 USD</span></div><button class="action primary" style="width:auto;position:absolute;right:12px;bottom:12px;min-height:38px;padding:0 13px" data-soon="trade">Trade now</button></div><div class="dots"><span class="dot active"></span><span class="dot"></span></div></section>'+
+      '<section class="section"><div class="section-title">Platforms</div><div class="mutedspace"></div>'+
+      platform('DT','Deriv Trader','Trade options on 100+ markets. No overnight swap fees.')+
+      platform('DB','Deriv Bot','Build and run automated bots, no coding needed.')+
+      platform('ST','SmartTrader','Classic interface for advanced options traders.')+
+      '</section>'+
+      '<section class="section"><div class="section-title">Trade types</div><div class="mutedspace"></div><div class="typegrid">'+
+      ['Rise/Fall','Higher/Lower','Matches/Differs','Even/Odd','Accumulators','Over/Under','Multipliers','Touch/No Touch','Vanillas','Turbos'].map(function(x){return '<button class="type" data-soon="'+x+'">'+x+'</button>'}).join('')+
+      '</div></section></div>';
+  }
+  function platform(i,t,d){return '<button class="platform" data-soon="'+t+'" style="width:100%;text-align:left"><span class="platform-icon">'+i+'</span><span><h4>'+t+'</h4><p>'+d+'</p></span></button>'}
+  function portfolioTabs(){
+    return '<div class="subtabs">'+['overview','wallet','partners','trading','p2p'].map(function(x){return '<button class="subtab '+(state.portfolio===x?'active':'')+'" data-portfolio="'+x+'">'+x.charAt(0).toUpperCase()+x.slice(1)+'</button>'}).join('')+'</div>';
+  }
+  function rows(type){
+    if(type==='wallet'||type==='partners') return '<div class="list"><div class="row"><div><div class="row-title">US Dollar</div></div><div class="row-val">'+money('0.00')+'</div></div><div class="row"><div><div class="row-title">USDT (Tron)</div><div class="row-sub">Tether TRC20</div></div><div class="row-val">'+(state.hide?'•••• USDT':'0.00 USDT')+'<div class="row-eq">'+money('0.00')+'</div></div></div></div>';
+    if(type==='trading') return '<div class="list"><div class="row"><div class="row-title">Options</div><div class="row-val">'+money('0.00')+'</div></div><div class="row"><div class="row-title">Standard</div><div class="row-val">'+money('0.00')+'</div></div></div>';
+    return '<div class="card" style="padding:22px;text-align:center;color:#7b8186;font-size:12px">P2P is not available yet.</div>';
+  }
+  function portfolio(){
+    var content='';
+    if(state.portfolio==='overview'){
+      content='<section class="section"><div class="section-title">Wallet</div><div class="mutedspace"></div>'+rows('wallet')+'</section>'+
+      '<section class="section"><div class="section-title">Partners</div><div class="mutedspace"></div>'+rows('partners')+'</section>'+
+      '<section class="section"><div class="section-title">Trading</div><div class="mutedspace"></div>'+rows('trading')+'</section>';
+    } else {
+      content='<section class="section"><div class="section-title">'+state.portfolio.charAt(0).toUpperCase()+state.portfolio.slice(1)+'</div><div class="mutedspace"></div>'+rows(state.portfolio)+'</section>';
+    }
+    return header()+portfolioTabs()+balance('Est. total value',true)+'<div class="page">'+actions(['Deposit','Transfer','Withdraw'])+content+'<section class="section"><button class="link" data-soon="transactions">View all transactions</button></section></div>';
+  }
+  function modal(){
+    return '<div class="modalback" id="modalback"><div class="modal"><div class="fish">🐟</div><h3>Coming soon</h3><p>This part of the app isn\'t wired up in the clone yet.</p><button class="close" data-action="close">Close</button></div></div>';
+  }
+  function render(){
+    var html=state.view==='home'?home():state.view==='cfds'?cfds():state.view==='options'?options():portfolio();
+    app.innerHTML=html;
+    document.querySelectorAll('.nav').forEach(function(n){n.classList.toggle('active',n.getAttribute('data-view')===state.view)});
+  }
+  document.addEventListener('click',function(e){
+    var view=e.target.closest('[data-view]'); if(view){state.view=view.getAttribute('data-view');render();return}
+    var mode=e.target.closest('[data-mode]'); if(mode){state.mode=mode.getAttribute('data-mode');render();return}
+    var pt=e.target.closest('[data-portfolio]'); if(pt){state.portfolio=pt.getAttribute('data-portfolio');render();return}
+    var act=e.target.closest('[data-action]');
+    if(act){
+      var a=act.getAttribute('data-action');
+      if(a==='hide'){state.hide=!state.hide;render();return}
+      if(a==='dismiss'){state.banner=false;render();return}
+      if(a==='close'){var m=document.getElementById('modalback');if(m)m.remove();return}
+      if(a==='refresh'){act.animate([{opacity:.4},{opacity:1}],{duration:300});return}
+    }
+    if(e.target.closest('[data-soon]')) document.body.insertAdjacentHTML('beforeend',modal());
+  });
+  render();
+})();
+</script>
+</body>
+</html>
