@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#171619">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Chrome">
+<title>Deriv - Online Trading Platform</title>
+<style>
+:root{
+  --dark:#181c25;
+  --dark2:#20242e;
+  --red:#ff444f;
+  --red2:#ff5a64;
+  --text:#383d4a;
+  --muted:#9498a2;
+  --line:#ebebed;
+  --soft:#f5f5f6;
+  --card:#ffffff;
+  --shadow:0 1px 4px rgba(18,20,25,.08);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#eef0f2;color:var(--text)}
+button{font:inherit}
+.shell{width:100%;max-width:430px;min-height:100vh;margin:0 auto;background:#fff;position:relative;box-shadow:0 0 24px rgba(0,0,0,.08);overflow:hidden}
+#app{min-height:100vh;padding-bottom:68px;background:#fff}
+.chrome{
+  position:sticky;top:0;z-index:40;height:62px;background:var(--dark);color:#fff;
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.06)
+}
+.chrome-left,.chrome-right{display:flex;align-items:center;gap:3px}
+.chrome-center{min-width:0;text-align:left;line-height:1.05}
+.route{font-size:10px;color:rgba(255,255,255,.62);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.page-title{font-size:12px;font-weight:700;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.iconbtn{width:34px;height:34px;border:0;border-radius:50%;background:transparent;color:#fff;display:grid;place-items:center;position:relative}
+.iconbtn:active{background:rgba(255,255,255,.09)}
+.more-label{font-size:9px;position:absolute;bottom:0;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.68)}
+.ask{height:34px;border:0;border-radius:18px;background:rgba(255,255,255,.08);color:#fff;display:flex;align-items:center;gap:5px;padding:0 8px;font-size:10px;font-weight:700}
+.amy{width:20px;height:20px;border-radius:7px;display:grid;place-items:center;background:conic-gradient(#ff4b74,#ffb44c,#5bd89b,#5ac8ff,#7e6cff,#ff4b74);font-size:11px}
+.avatar{width:32px;height:32px;border:0;border-radius:50%;background:#fff;color:#30343c;font-size:11px;font-weight:800}
+.badge{position:absolute;top:0;right:-1px;min-width:16px;height:16px;padding:0 3px;border-radius:8px;background:var(--red);display:grid;place-items:center;font-size:9px;font-weight:800;border:2px solid var(--dark)}
+.logo{font-size:16px;font-weight:900;letter-spacing:-.5px}
+.grid6{width:30px;height:30px;border:1px solid rgba(255,255,255,.55);border-radius:7px;display:grid;place-items:center;font-size:10px;font-weight:800}
+.dotsbtn{font-size:18px;line-height:1}
+.homeglyph{font-size:17px}
+.deposit-row{padding:12px 16px 0;background:#fff}
+.deposit-wide{width:100%;height:44px;border:0;border-radius:12px;background:var(--red);color:#fff;font-weight:760}
+.explore-chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}.explore-chips::-webkit-scrollbar{display:none}
+.explore-chip{flex:0 0 auto;border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 12px;font-size:11px;font-weight:700;color:#4d525b;white-space:nowrap}
+.feature-card{border:1px solid var(--line);border-radius:15px;padding:15px;background:#fff;position:relative;overflow:hidden;min-height:188px}
+.feature-card h3{margin:0 0 6px;font-size:17px}.feature-card p{margin:0;color:var(--muted);font-size:11px;line-height:1.45;max-width:82%}
+.yearline,.pricegrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:15px}
+.yearline{font-size:9px;color:var(--muted)}.pricegrid{margin-top:4px;font-size:12px;font-weight:760}
+.activate{height:38px;border:0;border-radius:10px;background:var(--red);color:#fff;font-weight:750;padding:0 13px;margin-top:14px}
+.dotrow{display:flex;justify-content:center;gap:5px;margin-top:8px}.dot{width:6px;height:6px;border-radius:50%;background:#d2d4d8}.dot.active{width:16px;border-radius:4px;background:var(--red)}
+.mini-card{flex:0 0 70%;border:1px solid var(--line);border-radius:14px;background:#fff;padding:14px;text-align:left;min-height:116px}
+.mini-card h4{margin:0 0 6px;font-size:14px}.mini-card p{margin:0;font-size:10px;color:var(--muted);line-height:1.4}.mini-sub{margin-top:13px;color:var(--red);font-size:9px;font-weight:750}
+.platform{width:100%;display:flex;align-items:center;gap:11px;border:1px solid var(--line);border-radius:13px;background:#fff;padding:13px;text-align:left;margin-bottom:8px}
+.platform-icon{width:38px;height:38px;border-radius:11px;background:#f2f3f5;color:var(--red);display:grid;place-items:center;font-weight:850}
+.platform h4{margin:0 0 3px;font-size:13px}.platform p{margin:0;font-size:10px;color:var(--muted);line-height:1.35}
+.types{display:flex;flex-wrap:wrap;gap:8px}.type{border:1px solid var(--line);border-radius:999px;background:#fff;padding:8px 10px;font-size:10px}
+.hide-link{border:0;background:transparent;color:#fff;font-size:10px;opacity:.78;padding:5px 0}
+.logo-dot{color:var(--red)}
+.dropdown{
+  position:fixed;z-index:60;top:58px;left:50%;transform:translateX(-50%);width:min(398px,calc(100vw - 24px));
+  background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 12px 30px rgba(0,0,0,.17);padding:8px
+}
+.dropitem{width:100%;border:0;background:#fff;border-radius:10px;text-align:left;padding:11px 12px;font-size:13px;color:var(--text)}
+.dropitem:active{background:var(--soft)}
+.balance{background:var(--dark);color:#fff;padding:18px 18px 16px}
+.balance-top{display:flex;align-items:flex-start;justify-content:space-between}
+.balance-label{font-size:12px;color:rgba(255,255,255,.72)}
+.amount{font-size:30px;line-height:1.1;font-weight:760;letter-spacing:-.8px;margin-top:6px}
+.updated{font-size:10px;color:rgba(255,255,255,.48);margin-top:8px}
+.refresh{border:0;background:transparent;color:rgba(255,255,255,.76);font-size:10px;display:flex;align-items:center;gap:5px;padding:5px 0}
+.shimmer{height:30px;width:125px;border-radius:8px;margin-top:7px;background:linear-gradient(90deg,#282c38 20%,#303541 45%,#282c38 70%);background-size:220% 100%;animation:shimmer 1.3s linear infinite}
+@keyframes shimmer{to{background-position:-220% 0}}
+.page{padding:14px 16px 26px}
+.section{margin-top:18px}
+.section:first-child{margin-top:0}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.section-title{font-size:16px;font-weight:760;letter-spacing:-.2px}
+.small-link{border:0;background:transparent;color:var(--red);font-size:11px;font-weight:700;padding:0}
+.cards2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
+.account-card{border:1px solid var(--line);background:#fff;border-radius:14px;padding:14px;text-align:left;min-height:114px;position:relative}
+.acc-icon{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;color:#fff;font-size:11px;font-weight:900;margin-bottom:13px}
+.acc-blue{background:#4077e8}.acc-red{background:#f04b58}.acc-dark{background:#343945}
+.acc-label{font-size:12px;font-weight:720}.acc-value{font-size:18px;font-weight:760;margin-top:5px}
+.acc-meta{font-size:10px;color:var(--muted);margin-top:5px;display:flex;gap:6px;flex-wrap:wrap}
+.ellipsis{position:absolute;right:8px;top:8px;border:0;background:transparent;color:#7f838c;font-weight:900}
+.banner{position:relative;border:1px solid var(--line);border-radius:15px;padding:15px 82px 15px 15px;min-height:112px;overflow:hidden;background:linear-gradient(135deg,#fff,#f7f7f8)}
+.banner h3{font-size:15px;margin:0 0 6px}.banner p{font-size:11px;color:var(--muted);line-height:1.42;margin:0}
+.banner-art{position:absolute;right:-16px;bottom:-20px;width:106px;height:106px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff9097 0 18%,#ff444f 19% 45%,#6338c8 46% 68%,transparent 69%)}
+.dismiss{position:absolute;top:9px;right:9px;border:0;background:#f0f1f2;border-radius:9px;padding:5px 7px;font-size:9px;color:#666b74;z-index:2}
+.hscroll{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding-bottom:5px;scroll-snap-type:x mandatory}.hscroll::-webkit-scrollbar{display:none}
+.explore-card{flex:0 0 82%;scroll-snap-align:start;border:1px solid var(--line);border-radius:15px;background:#fff;padding:15px;min-height:128px;text-align:left}
+.explore-card h4{margin:0 0 7px;font-size:15px}.explore-card p{margin:0;color:var(--muted);font-size:11px;line-height:1.45}
+.market-mark{margin-top:16px;display:flex;gap:6px;flex-wrap:wrap}.pill{font-size:9px;background:#f1f2f3;border-radius:999px;padding:5px 7px;color:#60656e}
+.tabs{display:flex;overflow-x:auto;background:#fff;border-bottom:1px solid var(--line);scrollbar-width:none;padding:0 10px}.tabs::-webkit-scrollbar{display:none}
+.tab{position:relative;border:0;background:#fff;padding:13px 12px;font-size:12px;color:#7d8189;font-weight:650;white-space:nowrap}
+.tab.active{color:#222}.tab.active:after{content:"";position:absolute;height:3px;background:var(--red);border-radius:3px;left:12px;right:12px;bottom:0}
+.full-card{width:100%;display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:14px;background:#fff;padding:13px;text-align:left;margin-bottom:9px}
+.full-icon{width:38px;height:38px;border-radius:11px;background:#f1f2f4;display:grid;place-items:center;color:var(--red);font-weight:900;flex:0 0 auto}
+.full-card h4{margin:0 0 3px;font-size:13px}.full-card p{margin:0;font-size:10px;color:var(--muted);line-height:1.35}
+.highlight{flex:0 0 64%;scroll-snap-align:start;border:1px solid var(--line);border-radius:14px;background:#fff;padding:13px;text-align:left}
+.highlight h4{margin:0;font-size:14px}.highlight p{font-size:10px;color:var(--muted);margin:5px 0 0}.mt5{display:inline-block;margin-top:10px;font-size:9px;background:#242833;color:#fff;border-radius:5px;padding:4px 6px}.gain{color:#15915f;font-size:10px;font-weight:700;margin-top:10px}
+.segment{display:inline-flex;background:#f0f1f2;border-radius:999px;padding:3px;margin-bottom:14px}
+.segment button{border:0;border-radius:999px;background:transparent;padding:7px 13px;font-size:11px;color:#777d86;font-weight:700}
+.segment button.active{background:#fff;color:#222;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.circle-actions{display:flex;justify-content:flex-start;gap:24px;margin:2px 0 18px}
+.circle-action{border:0;background:transparent;display:flex;flex-direction:column;align-items:center;gap:7px;font-size:10px;color:#5f646c}
+.circle{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;border:1.5px solid #d9dbde;background:#fff;color:#5e636b}
+.circle.primary{border:0;background:linear-gradient(145deg,var(--red2),var(--red));color:#fff}
+.quotes{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding-bottom:5px}.quotes::-webkit-scrollbar{display:none}
+.quote{flex:0 0 82%;border:1px solid var(--line);border-radius:14px;background:#fff;padding:14px;text-align:left}
+.quote-name{font-size:12px;font-weight:720}.quote-price{font-size:22px;font-weight:760;margin:8px 0 4px}.change{font-size:10px;color:#d64e56}.trend{float:right;color:#d64e56}
+.subtabs{display:flex;overflow-x:auto;scrollbar-width:none;background:#fff;border-bottom:1px solid var(--line);padding:0 8px}.subtabs::-webkit-scrollbar{display:none}
+.subtab{border:0;background:#fff;padding:13px 10px;font-size:11px;color:#7d8188;white-space:nowrap}
+.subtab.active{color:var(--red);font-weight:750;border-bottom:3px solid var(--red)}
+.list{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}
+.row{display:flex;justify-content:space-between;align-items:center;padding:14px;border-bottom:1px solid var(--line)}.row:last-child{border-bottom:0}
+.row-title{font-size:12px;font-weight:720}.row-sub{font-size:9px;color:var(--muted);margin-top:3px}.row-value{text-align:right;font-size:12px;font-weight:720}.row-eq{font-size:9px;color:var(--muted);margin-top:3px}
+.empty{border:1px solid var(--line);border-radius:14px;padding:22px;text-align:center;color:var(--muted);font-size:11px}
+.bottom{
+  position:fixed;left:50%;transform:translateX(-50%);bottom:0;z-index:45;width:100%;max-width:430px;height:64px;background:#fff;border-top:1px solid var(--line);
+  display:grid;grid-template-columns:repeat(4,1fr);padding-bottom:max(3px,env(safe-area-inset-bottom))
+}
+.nav{border:0;background:#fff;color:#90949c;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:9px}
+.nav svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.8}.nav.active{color:var(--red);font-weight:800}
+.modalback{position:fixed;inset:0;background:rgba(0,0,0,.44);z-index:90;display:flex;align-items:flex-end;justify-content:center}
+.modal{width:100%;max-width:430px;background:#fff;border-radius:20px 20px 0 0;padding:25px 20px 28px;text-align:center}
+.fish{font-size:42px;animation:swim 1.1s ease-in-out infinite alternate}@keyframes swim{to{transform:translateX(6px) rotate(4deg)}}
+.modal h3{font-size:18px;margin:5px 0 7px}.modal p{font-size:12px;line-height:1.45;color:var(--muted);max-width:300px;margin:0 auto 18px}
+.close{width:100%;height:44px;border:0;border-radius:12px;background:#17191d;color:#fff;font-weight:750}
+.netlify-badge{position:fixed;z-index:50;right:8px;bottom:72px;background:#101114;color:#fff;text-decoration:none;font-size:8px;border-radius:5px;padding:6px 8px;box-shadow:0 2px 7px rgba(0,0,0,.18)}
+.install-sheet{display:none}
+@media(min-width:700px){.shell{margin:12px auto;min-height:calc(100vh - 24px);border-radius:18px}.bottom{bottom:12px;border-radius:0 0 18px 18px}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <main id="app"></main>
+  <nav class="bottom" aria-label="Primary navigation">
+    <button class="nav active" data-view="home"><svg viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/><path d="M9.5 20v-6h5v6"/></svg><span>Home</span></button>
+    <button class="nav" data-view="cfds"><svg viewBox="0 0 24 24"><path d="M4 18V8"/><path d="M10 18V5"/><path d="M16 18v-7"/><path d="M22 18H2"/></svg><span>CFDs</span></button>
+    <button class="nav" data-view="options"><svg viewBox="0 0 24 24"><path d="M4 18 9 13l4 3 7-9"/><path d="M17 7h3v3"/></svg><span>Options</span></button>
+    <button class="nav" data-view="portfolio"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5.5A1.5 1.5 0 0 1 9.5 4h5A1.5 1.5 0 0 1 16 5.5V7"/><path d="M3 12h18"/></svg><span>Portfolio</span></button>
+  </nav>
+  <a class="netlify-badge" href="https://app.netlify.com/drop" target="_blank" rel="noreferrer">Powered by Netlify</a>
+</div>
+<div class="install-sheet"><p>Loading…</p><p>Install app</p><p><strong>Install Chrome</strong></p><p>1. Tap the <strong>Share</strong> icon in Safari's toolbar.</p><p>2. Scroll down and tap <strong>Add to Home Screen</strong>.</p><p>3. Tap <strong>Add</strong> in the top-right corner.</p></div>
+<script>
+(function(){
+const state={view:'home',portfolio:'overview',mode:'real',banner:true,menu:false};
+const app=document.getElementById('app');
+const icons={
+ back:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>',
+ menu:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
+ bell:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg>',
+ gear:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V21h-4v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H3v-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.6V3h4v.1a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1H21v4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>',
+ search:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6"/><path d="m16 16 4 4"/></svg>'
+};
+function route(){return 'home.deriv.com/dashboard'+(state.view==='home'?'':'/'+state.view)}
+function title(){return state.view==='home'?'Dashboard':state.view==='cfds'?'CFDs':state.view==='options'?'Options':'Portfolio'}
+function header(){
+ const home='<span class="homeglyph">⌂</span>';
+ const grid='<span class="grid6">6</span>';
+ const dots='<span class="dotsbtn">•••</span>';
+ const eye='<span style="font-size:17px">◉</span><span class="badge">5</span>';
+ let center='', right='';
+ if(state.view==='portfolio'){
+   center='<div class="chrome-center"><div class="page-title"><span class="logo">Deriv<span class="logo-dot">.</span></span></div></div>';
+   right='<div class="chrome-right"><button class="ask" data-soon="amy"><span class="amy">✦</span><span>Ask Amy</span></button><button class="iconbtn" data-soon="grid">'+grid+'</button><button class="iconbtn" data-action="menu">'+dots+'</button></div>';
+ }else{
+   center='<div class="chrome-center"><div class="route">'+route()+'</div></div>';
+   right='<div class="chrome-right"><button class="iconbtn" data-soon="grid">'+grid+'</button><button class="iconbtn" data-action="menu">'+dots+'</button>'+(state.view!=='options'?'<button class="iconbtn" data-soon="notifications">'+eye+'</button>':'')+(state.view==='home'?'<button class="avatar" data-soon="profile">GW</button>':'')+'</div>';
+ }
+ return '<header class="chrome"><div class="chrome-left">'+home+'</div>'+center+right+'</header>'+
+   (state.menu?'<div class="dropdown">'+['CFDs','Standard','Options','MTS SWF','TradingView'].map(x=>'<button class="dropitem" data-menuitem="'+x+'">'+x+'</button>').join('')+'</div>':'');
+}
+function balance(label,showRefresh,showHide){
+ return '<section class="balance"><div class="balance-top"><div><div class="balance-label">'+label+'</div><div class="amount">0.00 USD</div></div>'+
+   (showHide?'<button class="hide-link" data-soon="hide">Hide balances</button>':showRefresh?'<button class="refresh" data-action="refresh">↻ Refresh balance</button>':'')+
+   '</div><div class="updated">Updated just now</div></section>';
+}
+function accountCard(icon,cls,name,meta,more){
+ return '<button class="account-card" data-soon="'+name+'">'+(more?'<span class="ellipsis">•••</span>':'')+'<span class="acc-icon '+cls+'">'+icon+'</span><div class="acc-label">'+name+'</div><div class="acc-value">0.00 USD</div>'+(meta?'<div class="acc-meta">'+meta+'</div>':'')+'</button>';
+}
+function highlight(t,d,tags){
+ return '<button class="explore-card" data-soon="'+t+'"><h4>'+t+'</h4><p>'+d+'</p><div class="market-mark">'+tags.map(x=>'<span class="pill">'+x+'</span>').join('')+'</div></button>';
+}
+function mini(t,d,sub){return '<button class="mini-card" data-soon="'+t+'"><h4>'+t+'</h4><p>'+d+'</p><div class="mini-sub">'+sub+'</div></button>'}
+function platform(i,t,d){return '<button class="platform" data-soon="'+t+'"><span class="platform-icon">'+i+'</span><span><h4>'+t+'</h4><p>'+d+'</p></span></button>'}
+function featureGold(){
+ return '<div class="feature-card"><h3>Gold</h3><p>Trade gold and other precious metals with tight spreads, directly on MT5.</p><div class="yearline"><span>2023</span><span>2024</span><span>2025</span></div><div class="pricegrid"><span>$2062.96</span><span>$2623.84</span><span>$4315.13</span></div><div class="market-mark"><span class="pill">24/5 trading</span><span class="pill">Specialised account</span></div><button class="activate" data-soon="activate-gold">Activate now</button></div><div class="dotrow"><span class="dot active"></span><span class="dot"></span></div>';
+}
+function home(){
+ return header()+balance('Total value',true,false)+'<div class="deposit-row"><button class="deposit-wide" data-soon="deposit">Deposit</button></div><div class="page">'+
+ '<section class="section"><div class="section-head"><div class="section-title">My trading accounts</div></div><div class="cards2">'+
+ accountCard('MT5 STD','acc-blue','CFDs | Standard','',true)+accountCard('↔','acc-red','Options','',false)+'</div></section>'+
+ (state.banner?'<section class="section"><div class="banner"><button class="dismiss" data-action="dismiss">Dismiss</button><h3>Trade with TradingView</h3><p>Advanced charts and tools for 24/7 Derived Indices.</p><div class="banner-art"></div></div><div class="dotrow"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div></section>':'')+
+ '<section class="section"><div class="section-head"><div class="section-title">Explore Deriv</div></div><div class="explore-chips">'+
+ ['CFDs | Standard','Options','TradingView','Swap-Free','P2P','More'].map(x=>'<button class="explore-chip" data-soon="'+x+'">'+x+'</button>').join('')+
+ '</div></section>'+
+ '<section class="section"><div class="section-head"><div class="section-title">Highlights</div><div style="font-size:13px;color:#7d8189">‹ &nbsp; ›</div></div><div class="hscroll">'+
+ highlight('Metals','A quick way to trade the world\'s leading gold and silver spot contracts.',['Gold','Silver'])+
+ highlight('US Indices','Trade the biggest US stock market indices with competitive spreads.',['S&P 500','Nasdaq 100','Dow Jones Industrial Average'])+
+ highlight('Major FX','Trade major currency pairs with tight spreads and high leverage.',['EUR/USD','GBP/USD','USD/JPY'])+
+ '</div></section></div>';
+}
+function explore(t,d,pills){return '<button class="explore-card" data-soon="'+t+'"><h4>'+t+'</h4><p>'+d+'</p><div class="market-mark">'+pills.map(x=>'<span class="pill">'+x+'</span>').join('')+'</div></button>'}
+function cfds(){
+ return header()+balance('Total trading value',true,false)+'<div class="page">'+segment()+circleActions(['Trade','Deposit'])+
+ '<section class="section"><div class="section-head"><div class="section-title">My accounts</div></div>'+
+ '<button class="account-card" style="width:100%" data-soon="CFDs | Standard"><span class="acc-icon acc-blue">MT5 STD</span><div class="acc-label">CFDs | Standard</div><div class="acc-value">0.00 USD</div></button></section>'+
+ '<section class="section"><div class="section-head"><div class="section-title">Featured</div></div>'+featureGold()+'</section>'+
+ '<section class="section"><div class="section-head"><div class="section-title">Activate more accounts</div><button class="small-link" data-soon="compare">Compare</button></div><div class="hscroll">'+
+ mini('cTrader','CFDs copy trading with 100+ instruments.','Copy trading')+
+ mini('Zero Spread','Cost-efficient trades, starting from 0 pips.','Trade with your terms')+
+ mini('Swap-Free','Keep trades open with no overnight charges.','Trade with your terms')+
+ mini('Financial','Tight spreads for financial markets.','Financial markets')+
+ '</div></section></div>';
+}
+function fullCard(icon,t,d){return '<button class="full-card" data-soon="'+t+'"><span class="full-icon">'+icon+'</span><span><h4>'+t+'</h4><p>'+d+'</p></span></button>'}
+function highlight(t,d,badge,gain){return '<button class="highlight" data-soon="'+t+'"><h4>'+t+'</h4><p>'+d+'</p>'+(badge?'<span class="mt5">'+badge+'</span>':'')+(gain?'<div class="gain">'+gain+'</div>':'')+'</button>'}
+function segment(){return '<div class="segment"><button class="'+(state.mode==='real'?'active':'')+'" data-mode="real">Real</button><button class="'+(state.mode==='demo'?'active':'')+'" data-mode="demo">Demo</button></div>'}
+function circleActions(items){return '<div class="circle-actions">'+items.map((x,i)=>'<button class="circle-action" data-soon="'+x+'"><span class="circle '+(i===0?'primary':'')+'">'+(x==='Trade'?'↗':x==='Deposit'?'+':x==='Withdraw'?'−':'⇄')+'</span><span>'+x+'</span></button>').join('')+'</div>'}
+function options(){
+ return header()+balance('Total trading value',false,true)+'<div class="page">'+segment()+circleActions(['Trade','Transfer'])+
+ '<section class="section"><div class="section-head"><div class="section-title">Most traded markets</div></div><div class="quotes">'+
+ quote('Volatility 100 (1s) Index','828.71','-0.05% (5m)')+
+ quote('Volatility 10 (1s) Index','9,737.86','-0.24% (5m)')+
+ quote('Volatility 15 (1s) Index','15,209.11','-0.39% (5m)')+
+ quote('Volatility 25 (1s) Index','7,918.09','-0.59% (5m)')+
+ quote('Volatility 30 (1s) Index','343.18','+0.03% (5m)')+
+ '</div></section>'+
+ '<section class="section"><div class="section-head"><div class="section-title">Featured</div></div><div class="banner"><h3>Rise / Fall</h3><p>Predict whether the market price will rise or fall by the end of your contract.</p><div class="market-mark"><span class="pill">100+ markets</span><span class="pill">From 1 USD</span></div></div></section>'+
+ '<section class="section"><div class="section-head"><div class="section-title">Platforms</div></div>'+
+ platform('DT','Deriv Trader','Trade options on 100+ markets. No overnight swap fees.')+
+ platform('DB','Deriv Bot','Build and run automated bots, no coding needed.')+
+ platform('ST','SmartTrader','Classic interface for advanced options traders.')+
+ '</section>'+
+ '<section class="section"><div class="section-head"><div class="section-title">Trade types</div></div><div class="types">'+
+ ['Rise/Fall','Higher/Lower','Matches/Differs','Even/Odd','Accumulators','Over/Under','Multipliers','Touch/No Touch','Vanillas','Turbos'].map(x=>'<button class="type" data-soon="'+x+'">'+x+'</button>').join('')+
+ '</div></section></div>';
+}
+function quote(n,p,c){const up=c.trim().startsWith('+');return '<button class="quote" data-soon="'+n+'"><div class="quote-name">'+n+'</div><div class="quote-price">'+p+' <span class="trend" style="color:'+(up?'#15915f':'#d64e56')+'">'+(up?'↗':'↘')+'</span></div><div class="change" style="color:'+(up?'#15915f':'#d64e56')+'">'+c+'</div></button>'}
+function portfolioTabs(){return '<div class="subtabs">'+['overview','wallet','partners','trading','p2p'].map(x=>'<button class="subtab '+(state.portfolio===x?'active':'')+'" data-portfolio="'+x+'">'+x.charAt(0).toUpperCase()+x.slice(1)+'</button>').join('')+'</div>'}
+function walletRows(){return '<div class="list"><div class="row"><div><div class="row-title">US Dollar</div></div><div class="row-value">0.00 USD</div></div><div class="row"><div><div class="row-title">USDT (Tron)</div></div><div class="row-value">0.00 USDT<div class="row-eq">0.00 USD</div></div></div></div>'}
+function partnersRows(){return '<div class="list"><div class="row"><div class="row-title">US Dollar</div><div class="row-value">0.00 USD</div></div></div>'}
+function tradingRows(){return '<div class="list"><div class="row"><div class="row-title">Options</div><div class="row-value">0.00 USD</div></div><div class="row"><div class="row-title">Standard</div><div class="row-value">0.00 USD</div></div></div>'}
+function portfolio(){
+ let content='';
+ if(state.portfolio==='overview'){
+   content='<section class="section"><div class="section-title">Wallet</div><div style="height:8px"></div>'+walletRows()+'</section>'+
+   '<section class="section"><div class="section-title">Partners</div><div style="height:8px"></div>'+partnersRows()+'</section>'+
+   '<section class="section"><div class="section-title">Trading</div><div style="height:8px"></div>'+tradingRows()+'</section>';
+ }else if(state.portfolio==='wallet'){
+   content='<section class="section"><div class="section-title">Wallet</div><div style="height:8px"></div>'+walletRows()+'</section>';
+ }else if(state.portfolio==='partners'){
+   content='<section class="section"><div class="section-title">Partners</div><div style="height:8px"></div>'+partnersRows()+'</section>';
+ }else if(state.portfolio==='trading'){
+   content='<section class="section"><div class="section-title">Trading</div><div style="height:8px"></div>'+tradingRows()+'</section>';
+ }else{
+   content='<section class="section"><div class="empty">P2P</div></section>';
+ }
+ return header()+portfolioTabs()+balance('Est. total value',true,false)+'<div class="page">'+circleActions(['Deposit','Transfer','Withdraw'])+content+
+ '<section class="section"><button class="small-link" data-soon="transactions">View all transactions</button></section></div>';
+}
+function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+function modal(){return '<div class="modalback" id="modalback"><div class="modal"><div class="fish">🐟</div><h3>Coming soon</h3><p>This part of the app isn\'t wired up in the clone yet.</p><button class="close" data-action="close">Close</button></div></div>'}
+function render(){
+ app.innerHTML=state.view==='home'?home():state.view==='cfds'?cfds():state.view==='options'?options():portfolio();
+ document.querySelectorAll('.nav').forEach(n=>n.classList.toggle('active',n.dataset.view===state.view));
+}
+document.addEventListener('click',e=>{
+ const view=e.target.closest('[data-view]'); if(view){state.view=view.dataset.view;state.menu=false;render();return}
+ const p=e.target.closest('[data-portfolio]'); if(p){state.portfolio=p.dataset.portfolio;render();return}
+ const mode=e.target.closest('[data-mode]'); if(mode){state.mode=mode.dataset.mode;render();return}
+ const mi=e.target.closest('[data-menuitem]'); if(mi){state.menu=false;document.body.insertAdjacentHTML('beforeend',modal());render();return}
+ const act=e.target.closest('[data-action]');
+ if(act){
+   const a=act.dataset.action;
+   if(a==='menu'){state.menu=!state.menu;render();return}
+   if(a==='back'){state.view='home';state.menu=false;render();return}
+   if(a==='dismiss'){state.banner=false;render();return}
+   if(a==='refresh'){act.animate([{opacity:.45},{opacity:1}],{duration:300});return}
+   if(a==='close'){document.getElementById('modalback')?.remove();return}
+ }
+ if(e.target.closest('[data-soon]')) document.body.insertAdjacentHTML('beforeend',modal());
+});
+render();
+})();
+</script>
+</body>
+</html>
