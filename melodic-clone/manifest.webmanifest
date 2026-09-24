@@ -1,8 +1,0 @@
-{
-  "name": "Deriv - Online Trading Platform",
-  "short_name": "Deriv",
-  "start_url": "/",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#171619"
-}
